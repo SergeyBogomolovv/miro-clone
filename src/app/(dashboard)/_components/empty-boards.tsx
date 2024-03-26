@@ -8,6 +8,7 @@ import { api } from '../../../../convex/_generated/api'
 import { useOrganization } from '@clerk/nextjs'
 import { useApiMutations } from '@/hooks/use-api-mutations'
 import { toast } from 'sonner'
+
 const font = Poppins({ weight: ['600'], subsets: ['latin'] })
 
 export default function EmptyBoards() {
@@ -19,6 +20,7 @@ export default function EmptyBoards() {
       .then(() => toast.success('Board created'))
       .catch(() => toast.error('Something went wrong'))
   }
+
   return (
     <div className='h-full flex flex-col items-center justify-center'>
       <Image src='/note.svg' alt='Note' width={140} height={140} />
