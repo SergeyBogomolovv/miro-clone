@@ -9,6 +9,7 @@ interface Props {
   title: string
   onClick: () => void
 }
+
 export default function Footer({
   isFavorite,
   author,
