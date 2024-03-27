@@ -10,6 +10,7 @@ interface Props {
   orgId: string
   disabled?: boolean
 }
+
 export default function NewBoardButton({ orgId, disabled }: Props) {
   const { mutate, pending } = useApiMutations(api.board.create)
   const onClick = () => {

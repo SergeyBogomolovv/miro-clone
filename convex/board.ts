@@ -30,3 +30,12 @@ export const create = mutation({
     return board
   },
 })
+export const remove = mutation({
+  args: { id: v.id('boards') },
+  handler: async (ctx, args) => {
+    const author = await ctx.auth.getUserIdentity()
+    if (!author) throw new Error('Unauthorized')
+    //Later implement favorite check
+    await ctx.db.delete(args.id)
+  },
+})
