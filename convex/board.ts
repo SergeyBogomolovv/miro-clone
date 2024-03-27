@@ -30,12 +30,28 @@ export const create = mutation({
     return board
   },
 })
+
 export const remove = mutation({
   args: { id: v.id('boards') },
   handler: async (ctx, args) => {
     const author = await ctx.auth.getUserIdentity()
     if (!author) throw new Error('Unauthorized')
+    const board = await ctx.db.get(args.id)
+    if (board?.authorId !== author.subject) throw new Error('No acces')
     //Later implement favorite check
     await ctx.db.delete(args.id)
+  },
+})
+
+export const update = mutation({
+  args: { id: v.id('boards'), newTitle: v.string() },
+  handler: async (ctx, args) => {
+    const title = args.newTitle.trim()
+    if (!title || title.length > 60) throw new Error('Bad title')
+    const author = await ctx.auth.getUserIdentity()
+    if (!author) throw new Error('Unauthorized')
+    const board = await ctx.db.get(args.id)
+    if (board?.authorId !== author.subject) throw new Error('No acces')
+    await ctx.db.patch(args.id, { title })
   },
 })

@@ -7,12 +7,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
-import { Delete, Link2, Trash2 } from 'lucide-react'
+import { Edit, Edit2, Link2, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useApiMutations } from '@/hooks/use-api-mutations'
 import { api } from '../../convex/_generated/api'
 import ConfirmModal from './confirmation-modal'
 import { Button } from './ui/button'
+import EditBoardTitleModal from '@/app/(dashboard)/_components/board-card/edit-board-title-modal'
 
 interface Props {
   children: React.ReactNode
@@ -21,6 +22,7 @@ interface Props {
   id: string
   title: string
 }
+
 export const Actions = ({ children, side, sideOffset, id, title }: Props) => {
   const { mutate, pending } = useApiMutations(api.board.remove)
   const onCopyLink = () => {
@@ -34,6 +36,7 @@ export const Actions = ({ children, side, sideOffset, id, title }: Props) => {
       .then(() => toast.success('Board deleted'))
       .catch(() => toast.error('Failed to delete the board'))
   }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
@@ -47,6 +50,15 @@ export const Actions = ({ children, side, sideOffset, id, title }: Props) => {
           <Link2 className='w-4 h-4 mr-2' />
           Copy board link
         </DropdownMenuItem>
+        <EditBoardTitleModal initialTitle={title} id={id}>
+          <Button
+            variant={'ghost'}
+            className='p-3 cursor-pointer text-sm w-full justify-start font-normal'
+          >
+            <Edit2 className='w-4 h-4 mr-2' />
+            Edit title
+          </Button>
+        </EditBoardTitleModal>
         <ConfirmModal
           onConfirm={onDelete}
           header='Delete this board?'

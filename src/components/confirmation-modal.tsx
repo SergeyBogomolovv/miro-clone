@@ -18,6 +18,7 @@ interface Props {
   header: string
   description?: string
 }
+
 export default function ConfirmModal({
   children,
   onConfirm,
@@ -28,6 +29,7 @@ export default function ConfirmModal({
   const handleconfirm = () => {
     onConfirm()
   }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger disabled={disabled} asChild>
